@@ -1,0 +1,15 @@
+Chapitre 1 : Introduction à la biologie cellulaire
+
+1.1 Les organites cellulaires
+
+Les cellules eucaryotes contiennent plusieurs organites spécialisés :
+- Mitochondries : Production d'ATP via la respiration cellulaire
+- Réticulum endoplasmique : Synthèse des protéines et lipides
+- Appareil de Golgi : Tri et modification des protéines
+
+1.2 La membrane plasmique
+
+Structure en double couche phospholipidique avec :
+- Perméabilité sélective
+- Protéines membranaires intégrées
+- Récepteurs de signalisation
