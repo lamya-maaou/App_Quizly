@@ -3,44 +3,44 @@ import axios from "axios";
 import "./StudentCategories.css";
 import { useNavigate } from "react-router-dom";
 
-const StudentModules = () => {
-  const [modules, setModules] = useState([]);
+const StudentCategories = () => {
+  const [categories, setCategories] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [moduleName, setModuleName] = useState("");
+  const [categoryName, setCategoryName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Fonction pour charger les modules
-  const fetchModules = async () => {
+  // Fonction pour charger les catégories
+  const fetchCategories = async () => {
     setIsLoading(true);
     setError(null);
     try {
       const response = await axios.get(
-        "http://localhost:8000/student/categories/",
+        "http://localhost:8000/api/student/categories/",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      setModules(response.data);
+      setCategories(response.data);
     } catch (error) {
-      console.error("Error fetching modules:", error);
-      setError("Failed to load modules");
+      console.error("Error fetching categories:", error);
+      setError("Failed to load categories");
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchModules();
+    fetchCategories();
   }, []);
 
-  // Fonction pour créer un nouveau module
-  const handleCreateModule = async () => {
-    if (!moduleName.trim()) {
-      alert("Module name cannot be empty.");
+  // Fonction pour créer une nouvelle catégorie
+  const handleCreateCategory = async () => {
+    if (!categoryName.trim()) {
+      alert("Category name cannot be empty.");
       return;
     }
 
@@ -49,8 +49,8 @@ const StudentModules = () => {
 
     try {
       await axios.post(
-        "http://localhost:8000/student/categories/create/",
-        { name: moduleName },
+        "http://localhost:8000/api/student/categories/create/",
+        { name: categoryName },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -59,12 +59,12 @@ const StudentModules = () => {
         }
       );
 
-      await fetchModules();
+      await fetchCategories();
       setShowModal(false);
-      setModuleName("");
+      setCategoryName("");
     } catch (error) {
-      console.error("Error creating module:", error.response?.data || error);
-      setError(error.response?.data?.error || "Failed to create module");
+      console.error("Error creating category:", error.response?.data || error);
+      setError(error.response?.data?.error || "Failed to create category");
     } finally {
       setIsLoading(false);
     }
@@ -72,12 +72,12 @@ const StudentModules = () => {
 
   // Fonction pour gérer le logout
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Supprimer le token
-    navigate("/login"); // Rediriger vers la page de connexion
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
   return (
-    <div className="student-modules">
+    <div className="student-categories">
       {/* Navbar */}
       <nav className="navbar">
         <div className="navbar-left">
@@ -97,35 +97,35 @@ const StudentModules = () => {
         </div>
       </nav>
 
-      {/* Modules List */}
-      <div className="modules-container">
-        <h2 className="modules-title">My Modules</h2>
+      {/* Categories List */}
+      <div className="categories-container">
+        <h2 className="categories-title">My Categories</h2>
 
-        {isLoading && !modules.length ? (
-          <p>Loading modules...</p>
+        {isLoading && !categories.length ? (
+          <p>Loading categories...</p>
         ) : error ? (
           <p className="error-message">{error}</p>
-        ) : modules.length === 0 ? (
+        ) : categories.length === 0 ? (
           <div className="empty-state">
-            <p className="no-modules">No modules yet.</p>
+            <p className="no-categories">No categories yet.</p>
             <button
-              className="create-first-module"
+              className="create-first-category"
               onClick={() => setShowModal(true)}
             >
-              Create your first module
+              Create your first category
             </button>
           </div>
         ) : (
-          <div className="modules-grid">
-            {modules.map((module) => (
+          <div className="categories-grid">
+            {categories.map((category) => (
               <div
-                className="module-card"
-                key={module.id}
-                onClick={() => navigate(`/student/categories/${module.id}`)}
+                className="category-card"
+                key={category.id}
+                onClick={() => navigate(`/student/categories/${category.id}`)}
               >
-                <h3>{module.name}</h3>
+                <h3>{category.name}</h3>
                 <p>
-                  Created: {new Date(module.created_at).toLocaleDateString()}
+                  Created: {new Date(category.created_at).toLocaleDateString()}
                 </p>
               </div>
             ))}
@@ -137,19 +137,19 @@ const StudentModules = () => {
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h3>Create New Module</h3>
+            <h3>Create New Category</h3>
             {error && <p className="modal-error">{error}</p>}
             <input
               type="text"
-              placeholder="Module Name"
-              value={moduleName}
-              onChange={(e) => setModuleName(e.target.value)}
+              placeholder="Category Name"
+              value={categoryName}
+              onChange={(e) => setCategoryName(e.target.value)}
               disabled={isLoading}
             />
             <div className="modal-buttons">
               <button
-                onClick={handleCreateModule}
-                disabled={isLoading || !moduleName.trim()}
+                onClick={handleCreateCategory}
+                disabled={isLoading || !categoryName.trim()}
               >
                 {isLoading ? "Creating..." : "Create"}
               </button>
@@ -171,4 +171,4 @@ const StudentModules = () => {
   );
 };
 
-export default StudentModules;
+export default StudentCategories;

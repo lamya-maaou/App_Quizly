@@ -56,7 +56,7 @@ function App() {
             element={<ModuleCreation />}
           />
           <Route
-            path="/student/categories/:id"
+            path="/student/categories/:category_id"
             element={<StudentCategoryDetail />}
           />
           <Route

@@ -1,16 +1,6 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-// Import des composants
-import LandingPage from "./LandingPage";
-import Login from "./Login";
-import SignUp from "./SignUp";
-import TeacherOrStudent from "./TeacherOrStudent";
-import TeacherModuleDetail from "./TeacherModuleDetail";
-import TeacherModules from "./TeacherModules";
-import TeacherQuizHistory from "./TeacherQuizHistory";
-import TeacherQuizDetail from "./TeacherQuizDetail";
-
+import { BrowserRouter as Routes, Route } from "react-router-dom";
+import "./StudentDashboard.css";
 // Import des composants pour les étudiants
 import StudentCategories from "./StudentCategories"; // Liste des modules étudiant
 import StudentCategoryDetail from "./StudentCategoryDetail"; // Détail du module étudiant
